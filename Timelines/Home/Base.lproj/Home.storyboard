@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Timelines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RWG-Hg-svd">
+                                <rect key="frame" x="0.0" y="44" width="414" height="60"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mjp-io-coZ">
+                                        <rect key="frame" x="45.5" y="14.5" width="323" height="32"/>
+                                        <segments>
+                                            <segment title="Latest"/>
+                                            <segment title="Today"/>
+                                            <segment title="Yesterday"/>
+                                            <segment title="All"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="didChangeFilterSelection:" destination="BYZ-38-t0r" eventType="valueChanged" id="en3-Qp-ffX"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OIl-g7-EgB">
+                                        <rect key="frame" x="0.0" y="59" width="414" height="1"/>
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="ce7-tr-nRE"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="OIl-g7-EgB" firstAttribute="leading" secondItem="RWG-Hg-svd" secondAttribute="leading" id="42E-vz-ZJI"/>
+                                    <constraint firstItem="mjp-io-coZ" firstAttribute="centerX" secondItem="RWG-Hg-svd" secondAttribute="centerX" id="Acv-Oi-SvW"/>
+                                    <constraint firstAttribute="height" constant="60" id="CCF-AP-lSk"/>
+                                    <constraint firstItem="mjp-io-coZ" firstAttribute="centerY" secondItem="RWG-Hg-svd" secondAttribute="centerY" id="Rf2-YQ-ane"/>
+                                    <constraint firstAttribute="trailing" secondItem="OIl-g7-EgB" secondAttribute="trailing" id="YBc-cg-bsT"/>
+                                    <constraint firstAttribute="bottom" secondItem="OIl-g7-EgB" secondAttribute="bottom" id="p0u-rx-hrk"/>
+                                </constraints>
+                            </view>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="F3B-Se-Z5t">
+                                <rect key="frame" x="0.0" y="104" width="414" height="792"/>
+                            </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p4R-7T-fRI">
+                                <rect key="frame" x="0.0" y="104" width="414" height="792"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enable location permissions" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ft-X3-YwL">
+                                        <rect key="frame" x="15" y="375.5" width="384" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BmW-AK-P8B">
+                                        <rect key="frame" x="183.5" y="411" width="47" height="30"/>
+                                        <state key="normal" title="Enable"/>
+                                        <connections>
+                                            <action selector="didTapEnable:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g6S-ls-wVH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="BmW-AK-P8B" firstAttribute="centerX" secondItem="p4R-7T-fRI" secondAttribute="centerX" id="DUo-6v-kc7"/>
+                                    <constraint firstAttribute="trailing" secondItem="6Ft-X3-YwL" secondAttribute="trailing" constant="15" id="J8r-qb-5Zt"/>
+                                    <constraint firstItem="6Ft-X3-YwL" firstAttribute="bottom" secondItem="p4R-7T-fRI" secondAttribute="centerY" id="RXW-74-Leh"/>
+                                    <constraint firstItem="6Ft-X3-YwL" firstAttribute="leading" secondItem="p4R-7T-fRI" secondAttribute="leading" constant="15" id="Zx0-hg-jti"/>
+                                    <constraint firstItem="BmW-AK-P8B" firstAttribute="top" secondItem="6Ft-X3-YwL" secondAttribute="bottom" constant="15" id="rBw-jY-JiR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RWG-Hg-svd" secondAttribute="trailing" id="AcN-2e-slA"/>
+                            <constraint firstItem="p4R-7T-fRI" firstAttribute="top" secondItem="F3B-Se-Z5t" secondAttribute="top" id="Gxf-EG-jeV"/>
+                            <constraint firstItem="p4R-7T-fRI" firstAttribute="trailing" secondItem="F3B-Se-Z5t" secondAttribute="trailing" id="a3G-Gh-oNW"/>
+                            <constraint firstItem="p4R-7T-fRI" firstAttribute="leading" secondItem="F3B-Se-Z5t" secondAttribute="leading" id="aJr-bg-yJ1"/>
+                            <constraint firstItem="RWG-Hg-svd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="b70-Y0-KEd"/>
+                            <constraint firstAttribute="bottom" secondItem="F3B-Se-Z5t" secondAttribute="bottom" id="bme-Al-Lef"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="F3B-Se-Z5t" secondAttribute="trailing" id="nas-o0-dpu"/>
+                            <constraint firstItem="F3B-Se-Z5t" firstAttribute="top" secondItem="RWG-Hg-svd" secondAttribute="bottom" id="p8F-0e-amS"/>
+                            <constraint firstItem="p4R-7T-fRI" firstAttribute="bottom" secondItem="F3B-Se-Z5t" secondAttribute="bottom" id="v6Y-h5-BKd"/>
+                            <constraint firstItem="RWG-Hg-svd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xF2-dl-rxh"/>
+                            <constraint firstItem="F3B-Se-Z5t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xp7-4A-rib"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="filterSelector" destination="mjp-io-coZ" id="xUF-Vd-s2z"/>
+                        <outlet property="mapView" destination="F3B-Se-Z5t" id="GfB-Ss-voE"/>
+                        <outlet property="permissionContainerView" destination="p4R-7T-fRI" id="FKz-Wm-9SS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="129"/>
+        </scene>
+    </scenes>
+</document>
