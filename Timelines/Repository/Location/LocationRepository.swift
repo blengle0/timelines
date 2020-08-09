@@ -27,7 +27,6 @@ class LocationRepository: NSObject {
     override init() {
         super.init()
         locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.delegate = self
     }
     
@@ -49,7 +48,7 @@ extension LocationRepository: LocationRepositoryType {
     
     func requestUpdatedLocation() {
         if hasLocationAccess {
-            locationManager.startUpdatingLocation()
+            locationManager.startMonitoringSignificantLocationChanges()
         }
     }
 }
