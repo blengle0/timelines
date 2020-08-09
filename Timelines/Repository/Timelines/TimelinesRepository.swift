@@ -17,11 +17,8 @@ enum TimelinesFilterType: Int {
     case all
 }
 
-extension Notification.Name {
-    static let TimelinesDidUpdate = Notification.Name(rawValue: "TimelinesDidUpdate")
-}
-
 protocol TimelinesRepositoryType {
+    var lastModifiedPublisher: Published<Date>.Publisher { get }
     func addLocationWith(long: Double, lat: Double)
     func getLocations(filter: TimelinesFilterType) -> [TimelineLocation]
 }
@@ -38,17 +35,21 @@ class TimelinesRepository: CoreDataRepository {
         return "Timelines"
     }
     
+    @Published var lastModified: Date = Date()
 }
 
 extension TimelinesRepository: TimelinesRepositoryType {
     
+    var lastModifiedPublisher: Published<Date>.Publisher { $lastModified }
+    
     func addLocationWith(long: Double, lat: Double) {
+        let now = Date()
         let entity = createEntity()
         entity.long = long
         entity.lat = lat
-        entity.timestamp = Date()
+        entity.timestamp = now
         saveContext()
-        NotificationCenter.default.post(name: .TimelinesDidUpdate, object: self)
+        lastModified = now
     }
     
     func getLocations(filter: TimelinesFilterType) -> [TimelineLocation] {

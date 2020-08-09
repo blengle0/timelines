@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var permissionContainerView: UIView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var filterSelector: UISegmentedControl!
-    var viewModel: HomeViewModelType?
+    private var viewModel: HomeViewModelType?
     private var cancellables: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
@@ -26,14 +26,14 @@ class HomeViewController: UIViewController {
     func bindViewModel() {
         viewModel = HomeViewModel()
         
-        viewModel?.permissionRequired
+        viewModel?.permissionRequiredPublisher
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] (permissionRequired) in
                 self?.permissionContainerView.isHidden = !permissionRequired
                 self?.mapView.showsUserLocation = !permissionRequired
             }).store(in: &cancellables)
         
-        viewModel?.annotations
+        viewModel?.annotationsPublisher
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] (annotations) in
                 if let oldAnnotations = self?.mapView.annotations {

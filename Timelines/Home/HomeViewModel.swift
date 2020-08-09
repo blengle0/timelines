@@ -11,8 +11,8 @@ import Combine
 import MapKit
 
 protocol HomeViewModelType {
-    var permissionRequired: Published<Bool>.Publisher { get }
-    var annotations: Published<[MKAnnotation]>.Publisher { get }
+    var permissionRequiredPublisher: Published<Bool>.Publisher { get }
+    var annotationsPublisher: Published<[MKAnnotation]>.Publisher { get }
     
     func enableLocationPermissions()
     func updateFilterSelection(selection: TimelinesFilterType)
@@ -20,10 +20,10 @@ protocol HomeViewModelType {
 
 class HomeViewModel: HomeViewModelType {
     
-    @Published var permissionRequiredValue: Bool = true
-    var permissionRequired: Published<Bool>.Publisher { $permissionRequiredValue }
-    @Published var annotationsValue: [MKAnnotation] = []
-    var annotations: Published<[MKAnnotation]>.Publisher { $annotationsValue }
+    @Published var permissionRequired: Bool = true
+    var permissionRequiredPublisher: Published<Bool>.Publisher { $permissionRequired }
+    @Published var annotations: [MKAnnotation] = []
+    var annotationsPublisher: Published<[MKAnnotation]>.Publisher { $annotations }
     private var cancellables: Set<AnyCancellable> = []
     private var filterType: TimelinesFilterType = .latest
     
@@ -35,13 +35,15 @@ class HomeViewModel: HomeViewModelType {
         repository?.locationRepositoryType.hasLocationAccessPublisher
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] (hasLocationAccess) in
-                self?.permissionRequiredValue = !hasLocationAccess
+                self?.permissionRequired = !hasLocationAccess
                 self?.updateAnnotations()
             }).store(in: &cancellables)
         
-        NotificationCenter.default.addObserver(forName: .TimelinesDidUpdate, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
-            self?.updateAnnotations()
-        }
+        repository?.timelinesRepository.lastModifiedPublisher
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] (lastModified) in
+                self?.updateAnnotations()
+            }).store(in: &cancellables)
     }
     
     func updateAnnotations() {
@@ -49,7 +51,7 @@ class HomeViewModel: HomeViewModelType {
             return
         }
         
-        annotationsValue = locations.map { (location) -> MKAnnotation in
+        annotations = locations.map { (location) -> MKAnnotation in
             let annotation = MKPointAnnotation()
             annotation.coordinate = CLLocationCoordinate2D(latitude: location.lat, longitude: location.long)
             return annotation
